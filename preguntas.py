@@ -21,7 +21,12 @@ def pregunta_01():
     214
 
     """
-    return
+    c=[]
+    with open('data.csv', 'r') as csvfile:
+        csvreader = csv.reader(csvfile)
+        for row in csvreader:
+            c.append(int(row[0][2]))
+    return sum(c)
 
 
 def pregunta_02():
@@ -39,7 +44,16 @@ def pregunta_02():
     ]
 
     """
-    return
+    registros = {}
+    with open('data.csv', 'r') as csvfile:
+        csvreader = csv.reader(csvfile)
+        for row in csvreader:
+            letra = row[0][0]
+            if letra in registros:
+                registros[letra] += 1
+            else:
+                registros[letra] = 1
+    return sorted(registros.items())
 
 
 def pregunta_03():
@@ -57,7 +71,17 @@ def pregunta_03():
     ]
 
     """
-    return
+    sumas = {}
+    with open('data.csv', 'r') as csvfile:
+        csvreader = csv.reader(csvfile)
+        for row in csvreader:
+            letra = row[0][0]
+            suma = int(row[0][2])
+            if letra in sumas:
+                sumas[letra] += suma
+            else:
+                sumas[letra] = suma
+    return sorted(sumas.items())
 
 
 def pregunta_04():
@@ -82,7 +106,16 @@ def pregunta_04():
     ]
 
     """
-    return
+    meses = {}
+    with open('data.csv', 'r') as csvfile:
+        csvreader = csv.reader(csvfile)
+        for row in csvreader:
+            fecha = row[0][9:11]
+            if fecha in meses:
+                meses[fecha] += 1
+            else:
+                meses[fecha] = 1
+    return sorted(meses.items())
 
 
 def pregunta_05():
@@ -100,7 +133,25 @@ def pregunta_05():
     ]
 
     """
-    return
+    maximos = {}
+    minimos = {}
+    with open('data.csv', 'r') as csvfile:
+        csvreader = csv.reader(csvfile)
+        for row in csvreader:
+            letra = row[0][0]
+            valor = int(row[0][2])
+            if letra in maximos:
+                if valor > maximos[letra]:
+                    maximos[letra] = valor
+                elif valor < minimos[letra]:
+                    minimos[letra] = valor
+            else:
+                maximos[letra] = valor
+                minimos[letra] = valor
+    resultado = []
+    for letra in sorted(maximos.keys()):
+        resultado.append((letra, maximos[letra], minimos[letra]))
+    return resultado
 
 
 def pregunta_06():
@@ -125,7 +176,24 @@ def pregunta_06():
     ]
 
     """
-    return
+    dict_valores = {chr(i)+chr(j)+chr(k): [float('inf'), float('-inf')] for i in range(97, 123) for j in range(97, 123) for k in range(97, 123)}
+    
+    
+    with open("data.csv", "r") as archivo:  
+        for linea in archivo:
+            campos = linea.strip().split()
+            claves_valores = campos[4].split(",")
+            for clave_valor in claves_valores:
+                clave, valor = clave_valor.split(":")
+                valor = int(valor)
+                dict_valores[clave][0] = min(dict_valores[clave][0], valor)
+                dict_valores[clave][1] = max(dict_valores[clave][1], valor)
+
+    
+    resultado = [(clave, dict_valores[clave][0], dict_valores[clave][1]) for clave in dict_valores if dict_valores[clave][0] != float('inf')]
+    resultado.sort()
+    
+    return resultado
 
 
 def pregunta_07():
@@ -149,7 +217,21 @@ def pregunta_07():
     ]
 
     """
-    return
+    result = []
+    values = {}
+    with open('data.csv') as f:
+        reader = csv.reader(f)
+        for row in reader:
+            value = row[0][2]
+            letter = row[0][0]
+            if value not in values:
+                values[value] = []
+            values[value].append(letter)
+
+    for key in sorted(values.keys()):
+        result.append((int(key), values[key]))
+
+    return result
 
 
 def pregunta_08():
@@ -174,7 +256,27 @@ def pregunta_08():
     ]
 
     """
-    return
+    with open("data.csv", "r") as f:
+        lines = f.readlines()
+
+    values_dict = {}
+
+    for line in lines:
+        columns = line.strip().split(",")
+        val_0 = columns[0][0]
+        val_1 = int(columns[0][2])
+        if val_1 not in values_dict:
+            values_dict[val_1] = []
+        values_dict[val_1].append(val_0)
+
+    result_list = []
+
+    for key in sorted(values_dict.keys()):
+        values_list = values_dict[key]
+        unique_values = sorted(list(set(values_list)))
+        result_list.append((key, unique_values))
+
+    return result_list
 
 
 def pregunta_09():
@@ -197,7 +299,45 @@ def pregunta_09():
     }
 
     """
-    return
+    count_dict = {
+        "aaa": 0,
+        "bbb": 0,
+        "ccc": 0,
+        "ddd": 0,
+        "eee": 0,
+        "fff": 0,
+        "ggg": 0,
+        "hhh": 0,
+        "iii": 0,
+        "jjj": 0,
+    }
+
+    with open("data.csv", "r") as f:
+        lines = f.readlines()
+
+    for row in lines:
+        if("aaa" in row):
+            count_dict["aaa"]+=1
+        if("bbb" in row):
+            count_dict["bbb"]+=1
+        if("ccc" in row):
+            count_dict["ccc"]+=1
+        if("ddd" in row):
+            count_dict["ddd"]+=1
+        if("eee" in row):
+            count_dict["eee"]+=1
+        if("fff" in row):
+            count_dict["fff"]+=1
+        if("ggg" in row):
+            count_dict["ggg"]+=1
+        if("hhh" in row):
+            count_dict["hhh"]+=1
+        if("iii" in row):
+            count_dict["iii"]+=1
+        if("jjj" in row):
+            count_dict["jjj"]+=1
+            
+    return count_dict
 
 
 def pregunta_10():
@@ -218,7 +358,14 @@ def pregunta_10():
 
 
     """
-    return
+    respuesta=[]
+    with open('data.csv', 'r') as f:
+        lines=f.readlines()
+        for row in lines:
+            separado=row.split()
+            respuesta.append((separado[0],len(separado[3].split(",")),len(separado[4].split(","))))
+
+    return respuesta
 
 
 def pregunta_11():
@@ -239,7 +386,28 @@ def pregunta_11():
 
 
     """
-    return
+    diccionario = {"a":0,"b":0,"c":0,"d":0,"e":0,"f":0,"g":0}
+    with open("data.csv","r") as archivo:
+        lines=archivo.readlines()
+        for row in lines:
+            separador=row.split()
+            trasnf=int(separador[1])
+            if("a" in separador[3]):
+                diccionario["a"]+=trasnf
+            if("b" in separador[3]):
+                diccionario["b"]+=trasnf
+            if("c" in separador[3]):
+                diccionario["c"]+=trasnf
+            if("d" in separador[3]):
+                diccionario["d"]+=trasnf
+            if("e" in separador[3]):
+                diccionario["e"]+=trasnf
+            if("f" in separador[3]):
+                diccionario["f"]+=trasnf
+            if("g" in separador[3]):
+                diccionario["g"]+=trasnf
+                
+    return diccionario
 
 
 def pregunta_12():
@@ -257,4 +425,30 @@ def pregunta_12():
     }
 
     """
-    return
+    diccionario = {"A":0,"B":0,"C":0,"D":0,"E":0}
+    with open("data.csv","r") as archivo:
+        lines=archivo.readlines()
+        for row in lines:
+            separador=row.split()
+            if(separador[0]=="A"):
+                suma = 0
+                suma = sum(int(valor) for clave, valor in (elemento.split(":") for elemento in separador[4].split(",")))
+                diccionario["A"]+=suma
+            if(separador[0]=="B"):
+                suma = 0
+                suma = sum(int(valor) for clave, valor in (elemento.split(":") for elemento in separador[4].split(",")))
+                diccionario["B"]+=suma
+            if(separador[0]=="C"):
+                suma = 0
+                suma = sum(int(valor) for clave, valor in (elemento.split(":") for elemento in separador[4].split(",")))
+                diccionario["C"]+=suma
+            if(separador[0]=="D"):
+                suma = 0
+                suma = sum(int(valor) for clave, valor in (elemento.split(":") for elemento in separador[4].split(",")))
+                diccionario["D"]+=suma
+            if(separador[0]=="E"):
+                suma = 0
+                suma = sum(int(valor) for clave, valor in (elemento.split(":") for elemento in separador[4].split(",")))
+                diccionario["E"]+=suma
+                                
+    return diccionario
