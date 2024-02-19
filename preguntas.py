@@ -12,7 +12,6 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
-
 def pregunta_01():
     """
     Retorne la suma de la segunda columna.
@@ -21,7 +20,13 @@ def pregunta_01():
     214
 
     """
-    return
+    data = open('data.csv')
+    sum = 0
+    for line in data:
+        line = line.split('\t')
+        sum += int(line[1])
+    data.close()
+    return sum
 
 
 def pregunta_02():
@@ -39,7 +44,14 @@ def pregunta_02():
     ]
 
     """
-    return
+    data = open('data.csv')
+    registers = ('A', 'B', 'C', 'D', 'E')
+    registers = dict.fromkeys(registers, 0)
+    for line in data:
+        registers[line[0]] += 1
+    r = [(i,c) for i,c in registers.items()]
+    data.close()
+    return r
 
 
 def pregunta_03():
@@ -57,7 +69,14 @@ def pregunta_03():
     ]
 
     """
-    return
+    data = open('data.csv')
+    registers = ('A', 'B', 'C', 'D', 'E')
+    registers = dict.fromkeys(registers, 0)
+    for line in data:
+        registers[line[0]] += int(line[2])
+    r = [(i,c) for i,c in registers.items()]
+    data.close()
+    return r
 
 
 def pregunta_04():
@@ -82,7 +101,15 @@ def pregunta_04():
     ]
 
     """
-    return
+    data = open('data.csv')
+    registers = ('01','02','03','04','05', '06', '07', '08', '09', '10', '11', '12')
+    registers = dict.fromkeys(registers, 0)
+    for line in data:
+        line = line.split('\t')
+        registers[line[2][-5:-3]] += 1
+    r = [(i,c) for i,c in registers.items()]
+    data.close()
+    return r
 
 
 def pregunta_05():
@@ -100,7 +127,14 @@ def pregunta_05():
     ]
 
     """
-    return
+    data = open('data.csv')
+    registers = {'A':[], 'B':[], 'C':[], 'D':[], 'E':[]}
+    for line in data:
+        line = line.split('\t')
+        registers[line[0]].append(int(line[1]))
+    r = [(i, max(c), min(c)) for i,c in registers.items()]
+    data.close()
+    return r
 
 
 def pregunta_06():
@@ -125,7 +159,17 @@ def pregunta_06():
     ]
 
     """
-    return
+    data = open('data.csv')
+    registers = {'aaa':[], 'bbb':[], 'ccc':[], 'ddd':[], 'eee':[], 'fff':[], 'ggg':[], 'hhh':[], 'iii':[], 'jjj':[]}
+    for line in data:
+        line = line.split('\t')
+        col5 = line[4].rstrip('\n').split(',')
+        for r in col5:
+            registers[r[:3]].append(int(r[4:]))
+    
+    r = [(i, min(c), max(c)) for i,c in registers.items()]
+    data.close()
+    return r
 
 
 def pregunta_07():
@@ -149,7 +193,14 @@ def pregunta_07():
     ]
 
     """
-    return
+    data = open('data.csv')
+    registers = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[]}
+    for line in data:
+        line = line.split('\t')
+        registers[int(line[1])].append(line[0])
+    r = [(i, c) for i,c in registers.items()]
+    data.close()
+    return r
 
 
 def pregunta_08():
@@ -174,7 +225,16 @@ def pregunta_08():
     ]
 
     """
-    return
+    data = open('data.csv')
+    registers = {0:[], 1:[], 2:[], 3:[], 4:[], 5:[], 6:[], 7:[], 8:[], 9:[]}
+    for line in data:
+        line = line.split('\t')
+        if line[0] not in registers[int(line[1])]:
+            registers[int(line[1])].append(line[0])
+            registers[int(line[1])].sort()
+    r = [(i, c) for i,c in registers.items()]
+    data.close()
+    return r
 
 
 def pregunta_09():
@@ -197,7 +257,16 @@ def pregunta_09():
     }
 
     """
-    return
+    data = open('data.csv')
+    registers = ('aaa', 'bbb', 'ccc', 'ddd', 'eee', 'fff', 'ggg', 'hhh', 'iii', 'jjj')
+    registers = dict.fromkeys(registers, 0)
+    for line in data:
+        line = line.split('\t')
+        col5 = line[4].rstrip('\n').split(',')
+        for r in col5:
+            registers[r[:3]] += 1
+    data.close()
+    return registers
 
 
 def pregunta_10():
@@ -218,7 +287,13 @@ def pregunta_10():
 
 
     """
-    return
+    data = open('data.csv')
+    registers = []
+    for line in data:
+        line = line.split('\t')
+        registers.append((line[0], len(line[3].split(',')), len(line[4].split(','))))
+    data.close()
+    return registers
 
 
 def pregunta_11():
@@ -239,7 +314,15 @@ def pregunta_11():
 
 
     """
-    return
+    data = open('data.csv')
+    registers = ('a', 'b', 'c', 'd', 'e', 'f', 'g')
+    registers = dict.fromkeys(registers, 0)
+    for line in data:
+        line = line.split('\t')
+        for l in line[3].split(','):
+            registers[l] += int(line[1])
+    data.close()
+    return registers
 
 
 def pregunta_12():
@@ -257,4 +340,12 @@ def pregunta_12():
     }
 
     """
-    return
+    data = open('data.csv')
+    registers = ('A', 'B', 'C', 'D', 'E')
+    registers = dict.fromkeys(registers, 0)
+    for line in data:
+        line = line.split('\t')
+        for r in line[4].split(','):
+            registers[line[0]] += int(r[4:])
+    data.close()
+    return registers
